@@ -16,4 +16,18 @@ describe('Channels', function() {
             assert.equal(JSON.stringify([{socket: null, infos: {username: 'Romain'}}]), JSON.stringify(channels.get('1234abcd')));
         })
     })
+
+    describe('#getAdversary()', function() {
+        it('should adversary of a user of a channel', function() {
+            channels.add('1234abcd');
+            channels.addUser('1234abcd', {socket: {id: 1}, infos: {username: 'Romain'}});
+            channels.addUser('1234abcd', {socket: {id: 2}, infos: {username: 'Robert'}});
+
+            assert.doesNotThrow(function () {
+                channels.getAdversary('1234abcd', 1, function (adversary) {
+                    assert.equal('Robert', adversary.infos.username);
+                })
+            })
+        })
+    })
 })
