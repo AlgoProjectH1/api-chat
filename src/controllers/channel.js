@@ -1,4 +1,10 @@
-module.exports = function (socket, datas) {
+var Channel = {};
+
+/**
+ * When an user join a channel
+ * @param object datas
+ */
+Channel.join = function (socket, datas) {
     var gameID = datas.gameID;
     var user = datas.user;
     var channels = global.models.channels;
@@ -19,3 +25,6 @@ module.exports = function (socket, datas) {
         });
     });
 };
+
+
+module.exports = Channel;
