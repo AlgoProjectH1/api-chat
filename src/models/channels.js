@@ -40,5 +40,22 @@ Channels.get = function (channel) {
     return this.channels[channel];
 };
 
+/**
+ * Get the adversary of a user of a channel
+ * @param string channel
+ * @param string userID
+ * @param function callback
+ */
+Channels.getAdversary = function (channel, userID, callback) {
+    for (var user in this.channels[channel]) {
+        var currentUser = this.channels[channel][user];
+
+        if (currentUser.socket.id != userID) {
+            callback(currentUser);
+            break;
+        }
+    }
+};
+
 
 module.exports = Channels;
