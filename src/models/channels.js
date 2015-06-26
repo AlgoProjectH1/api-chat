@@ -8,7 +8,7 @@ var Channels = {
  * @param function callback
  */
 Channels.add = function (channel, callback) {
-    this.channels[channel] = [];
+    Channels.channels[channel] = [];
 
     if (callback) callback();
 };
@@ -19,7 +19,7 @@ Channels.add = function (channel, callback) {
  * @param object infos
  */
 Channels.addUser = function (channel, infos) {
-    this.channels[channel].push(infos);
+    Channels.channels[channel].push(infos);
 };
 
 /**
@@ -27,7 +27,7 @@ Channels.addUser = function (channel, infos) {
  * @param string channel
  */
 Channels.exists = function (channel) {
-    return (!this.channels[channel]) ? false : true;
+    return (!Channels.channels[channel]) ? false : true;
 };
 
 /**
@@ -35,9 +35,9 @@ Channels.exists = function (channel) {
  * @param string channel
  */
 Channels.get = function (channel) {
-    if (channel === undefined) return this.channels;
+    if (channel === undefined) return Channels.channels;
 
-    return this.channels[channel];
+    return Channels.channels[channel];
 };
 
 /**
@@ -47,12 +47,31 @@ Channels.get = function (channel) {
  * @param function callback
  */
 Channels.getAdversary = function (channel, userID, callback) {
-    for (var user in this.channels[channel]) {
-        var currentUser = this.channels[channel][user];
+    for (var user in Channels.channels[channel]) {
+        var currentUser = Channels.channels[channel][user];
 
         if (currentUser.socket.id != userID) {
             callback(currentUser);
             break;
+        }
+    }
+};
+
+/**
+ * Delete channel from socket id
+ * @param socket
+ */
+Channels.delete = function (socket) {
+    for (var channel in Channels.channels) {
+        for (var user in Channels.channels[channel]) {
+            var currentUser = Channels.channels[channel][user];
+
+            if (currentUser.socket.id == socket.id) {
+                delete Channels.channels[channel];
+
+                console.log('Delete channel '+ channel);
+                return;
+            }
         }
     }
 };
