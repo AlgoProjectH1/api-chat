@@ -1,17 +1,20 @@
 notifications:
   slack: projetgo:jo0oI2zSh4vHUoJzBIgbWIAF#builds
-
 language: node_js
 node_js:
-  - '0.10'
-
+- '0.10'
 before_install:
-  - npm -g install mocha
-
+- npm -g install mocha
 script:
-  - cd tests/
-  - mocha *
-
+- cd tests/
+- mocha *
 branches:
   only:
-    - master
+  - master
+deploy:
+  provider: heroku
+  app: api-chat-swipe
+  on: master
+  strategy: git
+  api_key:
+    secure: bKUssJZtqN6xXYxIxKOurBYsAWutHD5KjY6RB4WUwQ1oBFOoJzXEP7hxvuZtlZC6u3RTCJfgzAQLUKN8IGvLOFrfWgWngyp1x9FnE2OrJdKX5999ehPCyxQJPFc9hF5zX3AhJVyikleu303sfSQBjFk/skvPZTP/HGRUzW9XtD6yJpcPV3sKA/P3ou/ZthUpTSEm7gPKuuLe+0s77qb9pngE0jYAShjVz3hrjOcf04PvSkaxxGQXxFNlrI9n7LAG++CqWBKkcbzr/Kv3bqugvURSGmijPhVEterZWWxb13URyduGI8K6nU8CItZODgr95RCZqGQ2+oRxi2WZOhS+FQHNC4if310HUqBHJ8UaV9xThE9PXrDR/WMQL/oamA7hwcDJLL4+INbQ7s4ETCih5VRkF7lIASooTgNYw9VeHiYn1WjY/tFS3MQq77Vm6zIcnS7NIPDfUijUOJmwVjBKIv+KD6+5kZtXHHgx6pxr8KiLm/TXzVUJj0vZI73q9bCbC740vwGJGRPAaEYADXneGKmsesEb09ErBVSrBusoVe4jNxdFsPiCl3ebnkzVCPJ748zNmywY53/KKelkSKs19jfAx9kK5GXOhXzQUqf49Vf12v+TdDDUYwHlTn87Okv1Jtq9vShpCcI2zBkk28XtWfvrHk+6J0f94UTTGYxgCzk=
