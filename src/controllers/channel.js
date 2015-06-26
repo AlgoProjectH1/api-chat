@@ -5,12 +5,16 @@ var Channel = {};
  * @param object datas
  */
 Channel.join = function (socket, datas) {
+    datas = JSON.parse(datas);
+
     var gameID = datas.gameID;
     var user = datas.user;
     var channels = global.models.channels;
 
+    console.log(user.username +' join channel '+ gameID);
+
     if (channels.exists(gameID)) {
-        channels.addUser({
+        channels.addUser(gameID, {
             socket: socket,
             infos: user
         });
@@ -19,11 +23,13 @@ Channel.join = function (socket, datas) {
     }
 
     channels.add(gameID, function () {
-        channels.addUser({
+        channels.addUser(gameID, {
             socket: socket,
             infos: user
         });
     });
+
+    console.log('Create channel '+ gameID);
 };
 
 
