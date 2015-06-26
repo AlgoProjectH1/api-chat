@@ -24,7 +24,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('message:add', function (datas) {
-        controllers.message.add(datas);
+        controllers.message.add(socket, datas);
     });
 
     socket.on('disconnect', function () {
