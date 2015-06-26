@@ -1,5 +1,4 @@
-var io = require('socket.io');
-
+var io = require('socket.io')(process.env.PORT || 1334);
 
 
 /**
@@ -9,7 +8,7 @@ var controllers = {
     channel: require('./src/controllers/channel.js'),
     message: require('./src/controllers/message.js')
 };
-global.models {
+global.models = {
     channels: require('./src/models/channels.js')
 };
 
@@ -19,13 +18,16 @@ global.models {
  * Application events
  */
 io.on('connection', function (socket) {
-    socket.on('channel:join', controllers.channel.join);
-    socket.on('message:add', controllers.message.add);
+
+    socket.on('channel:join', function (datas) {
+        controllers.channel.join(socket, datas);
+    });
+
+    socket.on('message:add', function (datas) {
+        controllers.message.add(datas);
+    });
+
+    socket.on('disconnect', function () {
+        global.models.channels.delete(socket);
+    });
 });
-
-
-
-/**
- * Launch the app
- */
-io.listen(1334);
