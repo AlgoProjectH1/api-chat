@@ -5,6 +5,8 @@ var Message = {};
  * @param object datas
  */
 Message.add = function (socket, datas) {
+    datas = JSON.parse(datas);
+    
     var gameID = datas.gameID;
     var user = socket.id;
     var message = datas.message;
